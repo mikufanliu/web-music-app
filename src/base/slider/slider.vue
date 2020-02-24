@@ -5,7 +5,7 @@
       </slot>
     </div>
     <div class="dots">
-      <span class="dot" v-for="(item,index) in dots" :class="{active: currentPageIndex === index}"></span>
+      <span class="dot" v-for="(item,index) in dots" :class="{active: currentPageIndex === index}" @click="clickDot(index)"></span>
     </div>
   </div>
 </template>
@@ -55,6 +55,10 @@
       })
     },
     methods: {
+      clickDot(index) {
+        this.currentPageIndex = index
+        this.slider.goToPage(index, 0, 0)
+      },
       _initDots() {
         this.dots = new Array(this.children.length)
       },
@@ -101,7 +105,9 @@
           this.slider.next()
         }, this.interval)
       }
-
+    },
+    destroyed() {
+      clearTimeout(this.timer)
     }
   }
 </script>

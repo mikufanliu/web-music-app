@@ -1,6 +1,6 @@
 <template>
     <div class="recommend">
-      <scroll ref="scroll" class="recommend-content">
+      <scroll ref="scroll" class="recommend-content" :data="discList">
         <div>
           <div v-if="banner.length" class="slider-wrapper">
             <slider>
@@ -35,7 +35,8 @@
   import Loading from 'base/loading/loading'
   import Scroll from 'base/scroll/scroll'
   import Slider from 'base/slider/slider'
-  import {getBanner, getRecommendList} from 'api/recommend'
+  import {getBanner, getRecommendList, getRecommendListDetail} from 'api/recommend'
+  // import {getTop} from 'api/rank'
   import {ERR_OK} from 'common/js/config'
 
   export default {
@@ -48,8 +49,14 @@
     created () {
       this._getRecommend()
       this._getRecommendList()
+
     },
     methods: {
+      // _getRecommendListDetail() {
+      //   getRecommendListDetail(3114363672).then((res) => {
+      //     console.log(res.data)
+      //   })
+      // },
       _getRecommend () {
         getBanner().then((res) => {
           if (res.status === ERR_OK) {
