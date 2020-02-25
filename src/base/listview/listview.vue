@@ -10,7 +10,7 @@
         <h2 class="list-group-title">
           {{group.title}}
         </h2>
-        <ul class="list-group-item" v-for="item in group.items" :key="item.id">
+        <ul @click="selectItem(item)" class="list-group-item" v-for="item in group.items" :key="item.id">
           <img v-lazy="item.avatar" class="avatar">
           <span class="name">{{item.name}}</span>
         </ul>
@@ -28,6 +28,9 @@
         </li>
       </ul>
     </div>
+    <div class="list-fixed" v-show="fixedTitle" ref="fixed">
+      <h1 class="fixed-title">{{fixedTitle}}</h1>
+    </div>
   </scroll>
 </template>
 
@@ -36,12 +39,14 @@
   import {getData} from  'common/js/dom'
 
   const ANCHOR = 18
+  const TITLE_HEIGHT = 30
 
   export default {
     data () {
       return{
         scrollY: -1,
-        currentIndex: 0
+        currentIndex: 0,
+        diff: -1
       }
     },
     created () {
@@ -57,6 +62,9 @@
       }
     },
     methods: {
+      selectItem (item) {
+        this.$emit('select', item)
+      },
       scroll (pos) {
         this.scrollY = pos.y
       },
@@ -124,13 +132,25 @@
         }
         // 当滚动到底部，且-newY大于最后一个元素的上限
         this.currentIndex = listHeight.length - 2
+      },
+      diff(newDiff) {
+        let fixedTop = (newDiff > 0 && newDiff < TITLE_HEIGHT) ? newDiff -TITLE_HEIGHT : 0
+        this.fixedTop = fixedTop
+        this.$refs.fixed.style.transform = `translate3d(0,${fixedTop}px,0)`
+
       }
     },
-
     components: {
       Scroll
     },
     computed: {
+      fixedTitle () {
+        if (this.scrollY > 0) {
+          return ''
+        }
+
+        return this.data[this.currentIndex] ? this.data[this.currentIndex].title : 'wu'
+      },
       shortcutList () {
         return this.data.map((group) => {
           return group.title.substr(0, 1)

@@ -3,14 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueLazyload from 'vue-lazyload'
+import VueLazyLoad from 'vue-lazyload'
 import 'common/stylus/index.styl'
+import store from './store'
 
 // 解决移动端300ms延迟
-import fastclick from 'fastclick'
-fastclick.attach(document.body)
+import fastClick from 'fastclick'
+fastClick.attach(document.body)
 
-Vue.use(VueLazyload, {
+Vue.use(VueLazyLoad, {
   loading: require('common/image/default.png')
 })
 Vue.config.productionTip = false
@@ -19,6 +20,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
