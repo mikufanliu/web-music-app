@@ -149,7 +149,11 @@
           return ''
         }
 
+<<<<<<< HEAD
         return this.data[this.currentIndex] ? this.data[this.currentIndex].title : ''
+=======
+        return this.data[this.currentIndex] ? this.data[this.currentIndex].title : 'wu'
+>>>>>>> 53f2aef89b00742456a88215aa32c4bf6f8f49aa
       },
       shortcutList () {
         return this.data.map((group) => {
