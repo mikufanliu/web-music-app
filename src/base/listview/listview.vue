@@ -149,7 +149,7 @@
           return ''
         }
 
-        return this.data[this.currentIndex] ? this.data[this.currentIndex].title : 'wu'
+        return this.data[this.currentIndex] ? this.data[this.currentIndex].title : ''
       },
       shortcutList () {
         return this.data.map((group) => {
